@@ -25,16 +25,16 @@ jobs:
       - name: Remove Big Installs
         run: |
 
+          ls /opt
+          ls /usr/share
           printf "sudo rm -rf /usr/share/dotnet\n"
           sudo rm -rf /usr/share/dotnet
           printf "sudo rm -rf /usr/local/lib/android\n"
           sudo rm -rf /usr/local/lib/android
           printf "sudo rm -rf /opt/ghc\n"
           sudo rm -rf /opt/ghc
-
-          #cargo install du-dust
-          sudo apt-get install -y tree
-          #dust
+          printf "sudo rm -rf /opt/az\n"
+          sudo rm -rf /opt/az
           tree /opt
           tree /usr/share
           tree /
