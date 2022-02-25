@@ -31,7 +31,7 @@ jobs:
           sudo apt purge oracle-java*
           sudo apt remove --autoremove adoptopenjdk-*
 
-          sudo apt-get remove -y buildah dash dotnet-sdk* esl-erlang firefox
+          sudo apt-get remove -y buildah dotnet-sdk* esl-erlang firefox
           sudo apt-get remove -y firefox google-chrome-stable google-cloud-sdk
           sudo apt-get remove -y mssql* mysql* 
           sudo apt-get remove -y linux-azure*
