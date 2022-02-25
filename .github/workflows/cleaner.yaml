@@ -45,7 +45,7 @@ jobs:
           sudo rm -rf /opt/R
           printf "sudo rm -rf /opt/R\n"
           sudo rm -rf /opt/R
-          sudo apt uninstall -y podman java
+          sudo apt remove -y podman java swift texlive
           tree /opt/apps
           tree /opt/applications
           tree /usr/share
