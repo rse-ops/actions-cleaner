@@ -22,6 +22,7 @@ jobs:
           sudo rm -rf /opt/ghc
 
           cargo install du-dust
+          apt-get install -y tree
           dust
           tree /opt
           tree /usr/share
