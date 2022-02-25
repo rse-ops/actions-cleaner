@@ -25,27 +25,32 @@ jobs:
       - name: Remove Big Installs
         run: |
 
+          sudo apt-get remove -y podman swift texlive R maven r-base-core r-base apache2 azure-cli google-cloud-sdk
+          sudo apt-get autoremove
           ls /opt
           ls /usr/share
           printf "sudo rm -rf /usr/share/dotnet\n"
           sudo rm -rf /usr/share/dotnet
           printf "sudo rm -rf /opt/*.zip\n"
           sudo rm -rf /opt/*.zip
+          sudo rm -rf /usr/share/*.zip
           printf "sudo rm -rf /opt/*.tar.gz\n"
           sudo rm -rf /opt/*.tar.gz
+          sudo rm -rf /usr/share/*.tar.gz
           printf "sudo rm -rf /usr/local/lib/android\n"
           sudo rm -rf /usr/local/lib/android
           printf "sudo rm -rf /opt/ghc\n"
           sudo rm -rf /opt/ghc
           printf "sudo rm -rf /opt/az\n"
           sudo rm -rf /opt/az
+          sudo rm -rf /usr/share/az*
           printf "sudo rm -rf /opt/google\n"
           sudo rm -rf /opt/google
           printf "sudo rm -rf /opt/R\n"
           sudo rm -rf /opt/R
-          printf "sudo rm -rf /opt/R\n"
-          sudo rm -rf /opt/R
-          sudo apt-get remove -y podman swift texlive
+          sudo rm -rf /usr/share/R
+          printf "sudo rm -rf /opt/microsoft\n"
+          sudo rm -rf /opt/microsoft
           tree /opt/apps
           tree /opt/applications
           tree /usr/share
