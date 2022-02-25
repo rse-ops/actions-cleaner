@@ -29,6 +29,25 @@ jobs:
           sudo apt purge openjdk-*
           sudo apt remove --autoremove openjdk-*        
           sudo apt purge oracle-java*
+          sudo apt remove --autoremove adoptopenjdk-*
+
+          sudo apt-get remove -y buildah dash dotnet-sdk* esl-erlang firefox
+          sudo apt-get remove -y firefox google-chrome-stable google-cloud-sdk
+          sudo apt-get remove -y mssql* mysql* 
+          sudo apt-get remove -y linux-azure*
+          sudo apt-get remove -y linux-cloud-tools-*
+          sudo apt-get remove -y linux-cloud-tools-azure
+          sudo apt-get remove -y linux-cloud-tools-common
+          sudo apt-get remove -y nginx
+          sudo apt-get remove -y packages-microsoft-prod
+          sudo apt-get remove -y php*
+          sudo apt-get remove -y postgresql*
+          sudo apt-get remove -y pollinate
+          sudo apt-get remove -y powershell
+          sudo apt-get remove -y ruby-full
+          sudo apt-get remove -y swig
+          sudo apt-get remove -y texinfo
+          sudo rm /usr/local/aws-cli
 
           sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli google-cloud-sdk ant vim
           sudo apt-get autoremove
@@ -59,6 +78,7 @@ jobs:
         run: |
           tree --du -h /opt
           tree --du -h /
+          tree --du -h /opt/hostedtoolcache
 
       - name: Post-Size
         run: df -h
