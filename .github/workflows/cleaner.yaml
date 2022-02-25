@@ -25,6 +25,7 @@ jobs:
       - name: Remove Big Installs
         run: |
 
+          snap list
           sudo apt purge openjdk-*
           sudo apt remove --autoremove openjdk-*        
           sudo apt purge oracle-java*
