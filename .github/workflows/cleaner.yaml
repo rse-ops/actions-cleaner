@@ -14,16 +14,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Pre-Size
+        run: df -h
+
       - name: Purge Docker
+        run: docker system prune --all
+
+      - name: Remove Big Installs
         run: |
-          docker system prune --all
+
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /opt/ghc
 
-          cargo install du-dust
+          #cargo install du-dust
           apt-get install -y tree
-          dust
+          #dust
           tree /opt
           tree /usr/share
           tree /
+
+      - name: Post-Size
+        run: df -h
+
