@@ -29,13 +29,25 @@ jobs:
           ls /usr/share
           printf "sudo rm -rf /usr/share/dotnet\n"
           sudo rm -rf /usr/share/dotnet
+          printf "sudo rm -rf /opt/*.zip\n"
+          sudo rm -rf /opt/*.zip
+          printf "sudo rm -rf /opt/*.tar.gz\n"
+          sudo rm -rf /opt/*.tar.gz
           printf "sudo rm -rf /usr/local/lib/android\n"
           sudo rm -rf /usr/local/lib/android
           printf "sudo rm -rf /opt/ghc\n"
           sudo rm -rf /opt/ghc
           printf "sudo rm -rf /opt/az\n"
           sudo rm -rf /opt/az
-          tree /opt
+          printf "sudo rm -rf /opt/google\n"
+          sudo rm -rf /opt/google
+          printf "sudo rm -rf /opt/R\n"
+          sudo rm -rf /opt/R
+          printf "sudo rm -rf /opt/R\n"
+          sudo rm -rf /opt/R
+          sudo apt uninstall -y podman java
+          tree /opt/apps
+          tree /opt/applications
           tree /usr/share
           tree /
 
