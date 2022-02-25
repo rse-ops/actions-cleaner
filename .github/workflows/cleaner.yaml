@@ -25,6 +25,10 @@ jobs:
       - name: Remove Big Installs
         run: |
 
+          sudo apt purge openjdk-*
+          sudo apt remove --autoremove openjdk-*        
+          sudo apt purge oracle-java*
+
           sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli google-cloud-sdk
           sudo apt-get autoremove
           ls /opt
