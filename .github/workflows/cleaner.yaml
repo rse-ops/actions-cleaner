@@ -29,10 +29,8 @@ jobs:
           sudo apt remove --autoremove openjdk-*        
           sudo apt purge oracle-java*
 
-          sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli google-cloud-sdk
+          sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli google-cloud-sdk ant vim
           sudo apt-get autoremove
-          ls /opt
-          ls /usr/share
           printf "sudo rm -rf /usr/share/dotnet\n"
           sudo rm -rf /usr/share/dotnet
           printf "sudo rm -rf /opt/*.zip\n"
@@ -55,10 +53,7 @@ jobs:
           sudo rm -rf /usr/share/R
           printf "sudo rm -rf /opt/microsoft\n"
           sudo rm -rf /opt/microsoft
-          tree /opt/apps
-          tree /opt/applications
-          tree /usr/share
-          tree /
+          tree --du -h -L 3 /opt
 
       - name: Post-Size
         run: df -h
