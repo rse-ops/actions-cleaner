@@ -1,0 +1,28 @@
+name: Actions Cleaner
+
+# This is an experiment to see if we can get a better minimal container
+# by removing a bunch of things we don't want.
+
+on: 
+
+  # On pull request we test updates to images
+  pull_request: []
+ 
+jobs:
+  update:
+    name: Clean All The Things!
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Purge Docker
+        run: |
+          docker system prune --all
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+
+          cargo install du-dust
+          dust
+          tree /opt
+          tree /usr/share
+          tree /
