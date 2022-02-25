@@ -25,7 +25,6 @@ jobs:
       - name: Remove Big Installs
         run: |
 
-          comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
           sudo apt purge openjdk-*
           sudo apt remove --autoremove openjdk-*        
           sudo apt purge oracle-java*
@@ -47,7 +46,7 @@ jobs:
           sudo apt-get remove -y ruby-full
           sudo apt-get remove -y swig
           sudo apt-get remove -y texinfo
-          sudo rm /usr/local/aws-cli
+          sudo rm -rf /usr/local/aws-cli
 
           sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli google-cloud-sdk ant vim
           sudo apt-get autoremove
@@ -73,6 +72,7 @@ jobs:
           sudo rm -rf /usr/share/R
           printf "sudo rm -rf /opt/microsoft\n"
           sudo rm -rf /opt/microsoft
+          comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
 
       - name: List What's Left
         run: |
