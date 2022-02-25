@@ -18,17 +18,22 @@ jobs:
         run: df -h
 
       - name: Purge Docker
-        run: docker system prune --all
+        run: |
+           printf "docker system prune --all --force\n"
+           docker system prune --all --force
 
       - name: Remove Big Installs
         run: |
 
+          printf "sudo rm -rf /usr/share/dotnet\n"
           sudo rm -rf /usr/share/dotnet
+          printf "sudo rm -rf /usr/local/lib/android\n"
           sudo rm -rf /usr/local/lib/android
+          printf "sudo rm -rf /opt/ghc\n"
           sudo rm -rf /opt/ghc
 
           #cargo install du-dust
-          apt-get install -y tree
+          sudo apt-get install -y tree
           #dust
           tree /opt
           tree /usr/share
