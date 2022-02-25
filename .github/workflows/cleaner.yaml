@@ -48,7 +48,7 @@ jobs:
           sudo apt-get remove -y texinfo
           sudo rm -rf /usr/local/aws-cli
 
-          sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli google-cloud-sdk ant vim
+          sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli ant vim
           sudo apt-get autoremove
           printf "sudo rm -rf /usr/share/dotnet\n"
           sudo rm -rf /usr/share/dotnet
