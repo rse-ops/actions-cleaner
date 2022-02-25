@@ -54,7 +54,11 @@ jobs:
           sudo rm -rf /usr/share/R
           printf "sudo rm -rf /opt/microsoft\n"
           sudo rm -rf /opt/microsoft
-          tree --du -h -L 3 /opt
+
+      - name: List What's Left
+        run: |
+          tree --du -h /opt
+          tree --du -h /
 
       - name: Post-Size
         run: df -h
