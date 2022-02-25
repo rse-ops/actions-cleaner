@@ -25,7 +25,7 @@ jobs:
       - name: Remove Big Installs
         run: |
 
-          sudo apt-get remove -y podman swift texlive R maven r-base-core r-base apache2 azure-cli google-cloud-sdk
+          sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli google-cloud-sdk
           sudo apt-get autoremove
           ls /opt
           ls /usr/share
