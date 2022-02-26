@@ -42,10 +42,42 @@ jobs:
 ```
 
 We have them organized by base runner in case someone
-else wants to add others! If you need space in addition to this, you can try out
-[easimon/maximize-build-space](https://github.com/easimon/maximize-build-space#how-it-works) which
-tries to consolidate filesystems.
+else wants to add others! 
 
+## Frequently Asked Questions
+
+> Why does it take 10 minutes?
+
+There is a tradeoff between uninstalling stuff and time. If you uninstall nothing, your builds will start right away, but you get no extra free space.
+If you uninstall everything, you have to wait and get the maximum space. If you use this action we recommend tweaking for your use case! The default
+is to set true for everything, the assumption being that most people will be more selective about adding things back in.
+
+> Why do you apt uninstall patterns like `linux-azure-*`?
+
+The assumption here is that if someone wants to uninstall something in a namespace,
+they want to uninstall everything in the namespace. By using patterns are recipe is less likely
+to get outdated over time (and thus will have less maintanance work).
+
+> Why do you catch a lot of apt remove errors?
+
+You mean with a pipe to an echo? We do this for the same reason as the previous bullet!
+If a runner changes slightly we don't want everyone's workflows to fail because of one thing.
+That said, if you see a change or an issue, please [let us know](https://github.com/rse-ops/actions-cleaner/issues).
+
+> Can we add other runners or things to remove?
+
+Yes of course! If you want to open a pull request, we welcome contributions. Or if you want
+to request a small tweak or have a question, please [open an issue](https://github.com/rse-ops/actions-cleaner/issues).
+
+> Have you thought about messing around with swap / mounts?
+
+There is a sibling action [easimon/maximize-build-space](https://github.com/easimon/maximize-build-space#how-it-works) that
+we recommend trying for this. You should run it before this one.
+
+> Where can I learn more about GitHub runners?
+
+[Here you go!](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
+We ❤️ you GitHub! 
 
 ## Metrics
 
