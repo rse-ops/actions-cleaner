@@ -1,14 +1,15 @@
 # Actions Cleaner
 
-This is a test project to try wiping the GitHub runner of stuff we don't need.
+This is an action to try to make as much space on the GitHub runner as we can!
+Yes, we are building LLVM. 😂️
 
-## Development
-
-To develop I'm using the [reproduced runners here](https://github.com/nektos/act#runners)
-
-```bash
-$ docker run -it ghcr.io/catthehacker/ubuntu:act-latest
+```yaml
 ```
+
+For detailed usage, see [ubuntu](ubuntu). We have them organized by base runner in case someone
+else wants to add others! If you need space in addition to this, you can try out
+[easimon/maximize-build-space](https://github.com/easimon/maximize-build-space#how-it-works) which
+tries to consolidate filesystems.
 
 
 License

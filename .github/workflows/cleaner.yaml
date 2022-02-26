@@ -1,100 +1,22 @@
 name: Actions Cleaner
 
-# This is an experiment to see if we can get a better minimal container
-# by removing a bunch of things we don't want.
-
 on: 
 
   # On pull request we test updates to images
   pull_request: []
- 
+
 jobs:
-  update:
-    name: Clean All The Things!
-    runs-on: ubuntu-latest
+  test-cleaner:
+    name: Test Actions Cleaner
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-18.04
+          - ubuntu-20.04
+
     steps:
-
-      - name: Pre-Size
-        run: df -h
-
-      - name: Purge Docker
-        run: |
-           printf "docker system prune --all --force\n"
-           docker system prune --all --force
-
-      - name: Remove Big Installs
-        run: |
-
-          snap list
-          sudo apt purge openjdk-*
-          sudo apt remove --autoremove openjdk-*        
-          sudo apt purge oracle-java*
-          sudo apt remove --autoremove adoptopenjdk-*
-
-          sudo apt-get remove -y buildah dotnet-sdk* esl-erlang firefox
-          sudo apt-get remove -y firefox google-chrome-stable google-cloud-sdk
-          sudo apt-get remove -y mssql* mysql* 
-          sudo apt-get remove -y linux-azure*
-          sudo apt-get remove -y linux-cloud-tools-*
-          sudo apt-get remove -y linux-cloud-tools-azure
-          sudo apt-get remove -y linux-cloud-tools-common
-          sudo apt-get remove -y nginx
-          sudo apt-get remove -y packages-microsoft-prod
-          sudo apt-get remove -y php*
-          sudo apt-get remove -y postgresql*
-          sudo apt-get remove -y pollinate
-          sudo apt-get remove -y powershell
-          sudo apt-get remove -y ruby-full
-          sudo apt-get remove -y swig
-          sudo apt-get remove -y texinfo
-          sudo apt-get remove -y mercurial
-          sudo rm -rf /usr/local/aws-cli
-
-          sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli ant vim
-          sudo apt-get autoremove
-          printf "sudo rm -rf /usr/share/dotnet\n"
-          sudo rm -rf /usr/share/dotnet
-          printf "sudo rm -rf /opt/*.zip\n"
-          sudo rm -rf /opt/*.zip
-          sudo rm -rf /usr/share/*.zip
-          printf "sudo rm -rf /opt/*.tar.gz\n"
-          sudo rm -rf /opt/*.tar.gz
-          sudo rm -rf /usr/share/*.tar.gz
-          printf "sudo rm -rf /usr/local/lib/android\n"
-          sudo rm -rf /usr/local/lib/android
-          printf "sudo rm -rf /opt/ghc\n"
-          sudo rm -rf /opt/ghc
-          printf "sudo rm -rf /opt/az\n"
-          sudo rm -rf /opt/az
-          sudo rm -rf /usr/share/az*
-          printf "sudo rm -rf /opt/google\n"
-          sudo rm -rf /opt/google
-          printf "sudo rm -rf /opt/R\n"
-          sudo rm -rf /opt/R
-          sudo rm -rf /usr/share/R
-          printf "sudo rm -rf /opt/microsoft\n"
-          sudo rm -rf /opt/microsoft
-          sudo rm -rf /opt/hhvm
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
-          sudo rm -rf /opt/hostedtoolcache/Ruby
-          sudo rm -rf /opt/hostedtoolcache/go
-          sudo rm -rf /opt/hostedtoolcache/node
-          sudo rm -rf /opt/hostedtoolcache/pipx
-          sudo rm -rf /opt/hostedtoolcache/pipx_bin
-          sudo rm -rf /opt/hostedtoolcache/Java_Adopt_jdk
-          sudo rm -rf /opt/hostedtoolcache/PyPi
-          sudo rm -rf /var/cache/snapd/
-          sudo apt autoremove --purge snapd gnome-software-plugin-snap
-          sudo rm -rf ~/snap
-          sudo apt-mark hold snapd
-          comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
-
-      - name: List What's Left
-        run: |
-          tree --du -L 2 /opt
-          tree --du -L 2 /
-          tree --du -L 2 /opt/hostedtoolcache
-
-      - name: Post-Size
-        run: df -h
-
+      - name: Clean All The Things
+        uses: ./ubuntu
