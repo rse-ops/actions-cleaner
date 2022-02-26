@@ -1,0 +1,446 @@
+name: "Actions-Cleaner"
+description: "Clean all the things! Make more space on your runner. For real."
+inputs:
+  purge_docker:
+    description: run docker purge to remove cached images
+    default: true
+  remove_browsers:
+    description: remove Firefox and Google Chrome
+    default: true
+  remove_java:
+    description: remove Java, openjdk, ant, etc.
+    default: true
+  remove_podman:
+    description: remove Podman
+    default: true
+  remove_buildah:
+    description: remove buildah
+    default: true
+  remove_dotnet:
+    description: remove dotnet SDK
+    default: true
+  remove_erlang:
+    description: remove erlang
+    default: true
+  remove_google_cloud_sdk:
+    description: remove Google Cloud SDK
+    default: true
+  remove_mysql:
+    description: remove mysql and mssql
+    default: true
+  remove_postgres:
+    description: remove postgres*
+    default: true
+  remove_azure:
+    description: remove linux-azure* libraries
+    default: true
+  remove_linux_cloud_tools:
+    description: remove linux-cloud-tool* libraries
+    default: true
+  remove_apache:
+    description: remove apache2
+    default: true
+  remove_nginx:
+    description: remove nginx
+    default: true
+  remove_microsoft:
+    description: remove Microsoft Package
+    default: true
+  remove_ruby:
+    description: remove ruby
+    default: true
+  remove_powershell:
+    description: remove powershell
+    default: true
+  remove_pollinate:
+    description: remove pollinate
+    default: true
+  remove_php:
+    description: remove php
+    default: true
+  remove_swig:
+    description: remove swig
+    default: true
+  remove_swift:
+    description: remove swift
+    default: true
+  remove_latex:
+    description: remove latex
+    default: true
+  remove_awscli:
+    description: remove AWS Cli
+    default: true
+  remove_maven:
+    description: remove maven
+    default: true
+  remove_r:
+    description: remove r
+    default: true
+  remove_editors:
+    description: remove vim
+    default: true
+  remove_android:
+    description: remove android SDK
+    default: true
+  remove_archives:
+    description: remove scattered .tar.gz and .zip in opt and share
+    default: true
+  remove_ghc:
+    description: remove ghc (Haskell Compiler)
+    default: true
+  remove_hhvm:
+    description: remove hhvm "hack" virtual machine
+    default: true
+  remove_codeql:
+    description: remove CodeQL
+    default: true
+  remove_go:
+    description: remove go
+    default: true
+  remove_node:
+    description: remove node
+    default: true
+  remove_pipx:
+    description: remove pipx
+    default: true
+  remove_pypi:
+    description: remove PyPi
+    default: true
+  remove_snap:
+    description: remove snap
+    default: true
+
+outputs:
+  pre-size:
+    description: "size before clean"
+    value: ${{ steps.pre.outputs.pre-size }}
+  post-size:
+    description: "size after clean"
+    value: ${{ steps.post.outputs.post-size }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Pre-Size
+      id: pre
+      shell: bash
+      run: |
+         presize=$(df -h)
+         echo "::set-output name=pre-size::${presize}"
+
+    - shell: bash
+      run: echo "::group::Cleanup"
+
+    - if: ${{ inputs.purge_docker == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Docker Purge"
+        printf "docker system prune --all --force\n"
+        docker system prune --all --force
+        echo "::endgroup::"
+    
+    - if: ${{ inputs.remove_browsers == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Browsers"
+        sudo apt-get remove -y firefox || echo "Firefox is not installed"
+        sudo apt-get remove -y google-chrome-stable  || echo "Google Chrome is Not Installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_java == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Java"
+        sudo apt purge openjdk-* || echo "OpenJDK is not installed"
+        sudo apt remove --autoremove openjdk-*  || echo "OpenJDK is not installed"
+        sudo apt purge oracle-java* || echo "Oracle Java is not installed"
+        sudo apt remove --autoremove adoptopenjdk-* || echo "Adopt open JDK is not installed"
+        sudo apt-get remove -y ant || echo "ant is not installed"
+        sudo rm -rf /opt/hostedtoolcache/Java_Adopt_jdk
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_podman == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Podman"
+        sudo apt-get remove -y podman || echo "Podman is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_buildah == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Buildah"
+        sudo apt-get remove -y buildah || echo "Buidah is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_dotnet == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::DotNet"
+        sudo apt-get remove -y dotnet-sdk* || echo "Dotnet SDK is is not installed"
+        sudo rm -rf /usr/share/dotnet
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_erlang == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Erlang"
+        sudo apt-get remove -y esl-erlang || echo "erlang is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_google_cloud_sdk == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Google Cloud SDK"
+        sudo apt-get remove -y google-cloud-sdk || echo "Google Cloud SDK is not installed"
+        sudo rm -rf /opt/google
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_mysql == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::MySql"
+        sudo apt-get remove -y mssql* mysql*  || echo "mysql is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_postgres == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Postgres"
+        sudo apt-get remove -y  postgresql* || echo "postgres* is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_azure == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Azure"
+        sudo apt-get remove -y linux-azure*  || echo "linux-azure* is not installed"
+        sudo apt-get remove -y azure-cli || echo "Azure CLI is not installed"
+        sudo rm -rf /opt/az
+        sudo rm -rf /usr/share/az*
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_linux_cloud_tools == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Linux Cloud Tools"
+        sudo apt-get remove -y linux-cloud-tools-* || echo "Linux cloud tools are not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_nginx == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Nginx"
+        sudo apt-get remove -y nginx || echo "Nginx is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_apache == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Apache"
+        sudo apt-get remove -y apache2 || echo "apache is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_microsoft == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Microsoft"
+        sudo apt-get remove -y packages-microsoft-prod || echo "packages-microsoft-prod is not installed"
+        sudo rm -rf /opt/microsoft
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_php == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Php"
+        sudo apt-get remove -y php || echo "php is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_pollinate == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Pollinate"
+        sudo apt-get remove -y pollinate || echo "pollinate is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_powershell == 'true' }}
+      shell: bash
+      run: | 
+        echo "::group::Pollinate"
+        sudo apt-get remove -y powershell || echo "powershell is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_ruby == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Ruby"
+        sudo apt-get remove -y ruby-full || echo "ruby is not installed"
+        rm -rf /opt/hostedtoolcache/Ruby
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_swift == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Swift"
+        sudo apt-get remove -y swift || echo "swift is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_swig == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Swig"
+        sudo apt-get remove -y swig || echo "swig is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_latex == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Swig"
+        sudo apt-get remove -y texinfo || echo "texinfo is not installed"
+        sudo apt-get remove -y texlive || echo "texlive is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_mercurial == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Mercurial"
+        sudo apt-get remove -y mercurial || echo "mercurial is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_awscli == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::AWS Cli"
+        sudo rm -rf /usr/local/aws-cli
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_maven == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Maven"
+        sudo apt-get remove -y maven || echo "maven is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_r == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::R"
+        sudo apt-get remove -y r-base-core r-base || echo "R is not installed"
+        sudo rm -rf /opt/R
+        sudo rm -rf /usr/share/R
+        echo "::endgroup::"
+  
+    - if: ${{ inputs.remove_vim == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Editors"
+        sudo apt-get remove -y r-base-core r-base || echo "R is not installed"
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_archives == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Archives"
+        sudo rm -rf /opt/*.zip
+        sudo rm -rf /opt/*.tar.gz
+        sudo rm -rf /usr/share/*.zip
+        sudo rm -rf /usr/share/*.tar.gz
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_android == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Android"
+        sudo rm -rf /usr/local/lib/android
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_ghc == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::GHC"
+        sudo rm -rf /opt/ghc
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_hhvm == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::HHVM"
+        sudo rm -rf /opt/hhvm
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_codeql == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::CodeQL"
+        sudo rm -rf /opt/hostedtoolcache/CodeQL
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_go == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Go"
+        sudo rm -rf /opt/hostedtoolcache/go
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_node == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Node"
+        sudo rm -rf /opt/hostedtoolcache/node
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_pipx == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Pipx"
+        sudo rm -rf /opt/hostedtoolcache/pipx
+        sudo rm -rf /opt/hostedtoolcache/pipx_bin
+        sudo rm -rf /opt/pipx
+        sudo rm -rf /opt/pipx_bin
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_pypi == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::Pypi"
+        sudo rm -rf /opt/hostedtoolcache/PyPi
+        echo "::endgroup::"
+
+    - if: ${{ inputs.remove_snap == 'true' }}
+      shell: bash
+      run: |
+        echo "::group::snap"
+        sudo rm -rf /var/cache/snapd/
+        sudo apt autoremove --purge snapd gnome-software-plugin-snap
+        sudo rm -rf ~/snap
+        sudo apt-mark hold snapd
+        echo "::endgroup::"
+
+    - shell: bash
+      run: |
+        echo "::group::List APT"
+        comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
+        echo "::endgroup::"
+
+    - shell: bash
+      run: |
+        echo "::group::Autoremove"
+        sudo apt-get autoremove
+        echo "::endgroup::"
+
+    - shell: bash
+      run: |
+        echo "::group::What's Left"
+        tree --du -L 2 /
+        echo "::endgroup::"
+
+    - shell: bash
+      run: echo "::endgroup::"
+
+
+    - name: Post-Size
+      id: post
+      shell: bash
+      run: |
+         postsize=$(df -h)
+         echo "::set-output name=post-size::${postsize}"
