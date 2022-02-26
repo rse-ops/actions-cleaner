@@ -125,12 +125,13 @@ runs:
       id: pre
       shell: bash
       run: |
-         df -h    
          presize=$(df -h)
          echo "::set-output name=pre-size::${presize}"
 
-    - name: Docker Purge
-      if: ${{ inputs.purge_docker == 'true' }}
+    - shell: bash
+      run: echo "::group::Cleanup"
+
+    - if: ${{ inputs.purge_docker == 'true' }}
       shell: bash
       run: |
         echo "::group::Docker Purge"
@@ -138,8 +139,7 @@ runs:
         docker system prune --all --force
         echo "::endgroup::"
     
-    - name: Remove Browsers
-      if: ${{ inputs.remove_browsers == 'true' }}
+    - if: ${{ inputs.remove_browsers == 'true' }}
       shell: bash
       run: |
         echo "::group::Browsers"
@@ -147,8 +147,7 @@ runs:
         sudo apt-get remove -y google-chrome-stable  || echo "Google Chrome is Not Installed"
         echo "::endgroup::"
 
-    - name: Remove Java
-      if: ${{ inputs.remove_java == 'true' }}
+    - if: ${{ inputs.remove_java == 'true' }}
       shell: bash
       run: |
         echo "::group::Java"
@@ -160,24 +159,21 @@ runs:
         sudo rm -rf /opt/hostedtoolcache/Java_Adopt_jdk
         echo "::endgroup::"
 
-    - name: Remove Podman
-      if: ${{ inputs.remove_podman == 'true' }}
+    - if: ${{ inputs.remove_podman == 'true' }}
       shell: bash
       run: |
         echo "::group::Podman"
         sudo apt-get remove -y podman || echo "Podman is not installed"
         echo "::endgroup::"
 
-    - name: Remove Buildah
-      if: ${{ inputs.remove_buildah == 'true' }}
+    - if: ${{ inputs.remove_buildah == 'true' }}
       shell: bash
       run: |
         echo "::group::Buildah"
         sudo apt-get remove -y buildah || echo "Buidah is not installed"
         echo "::endgroup::"
 
-    - name: Remove DotNet
-      if: ${{ inputs.remove_dotnet == 'true' }}
+    - if: ${{ inputs.remove_dotnet == 'true' }}
       shell: bash
       run: |
         echo "::group::DotNet"
@@ -185,16 +181,14 @@ runs:
         sudo rm -rf /usr/share/dotnet
         echo "::endgroup::"
 
-    - name: Remove Erlang
-      if: ${{ inputs.remove_erlang == 'true' }}
+    - if: ${{ inputs.remove_erlang == 'true' }}
       shell: bash
       run: |
         echo "::group::Erlang"
         sudo apt-get remove -y esl-erlang || echo "erlang is not installed"
         echo "::endgroup::"
 
-    - name: Remove Google Cloud SDK
-      if: ${{ inputs.remove_google_cloud_sdk == 'true' }}
+    - if: ${{ inputs.remove_google_cloud_sdk == 'true' }}
       shell: bash
       run: |
         echo "::group::Google Cloud SDK"
@@ -202,24 +196,21 @@ runs:
         sudo rm -rf /opt/google
         echo "::endgroup::"
 
-    - name: Remove MySql
-      if: ${{ inputs.remove_mysql == 'true' }}
+    - if: ${{ inputs.remove_mysql == 'true' }}
       shell: bash
       run: |
         echo "::group::MySql"
         sudo apt-get remove -y mssql* mysql*  || echo "mysql is not installed"
         echo "::endgroup::"
 
-    - name: Remove Postgres
-      if: ${{ inputs.remove_postgres == 'true' }}
+    - if: ${{ inputs.remove_postgres == 'true' }}
       shell: bash
       run: |
         echo "::group::Postgres"
         sudo apt-get remove -y  postgresql* || echo "postgres* is not installed"
         echo "::endgroup::"
 
-    - name: Remove Azure
-      if: ${{ inputs.remove_azure == 'true' }}
+    - if: ${{ inputs.remove_azure == 'true' }}
       shell: bash
       run: |
         echo "::group::Azure"
@@ -229,32 +220,28 @@ runs:
         sudo rm -rf /usr/share/az*
         echo "::endgroup::"
 
-    - name: Remove Linux Cloud Tools
-      if: ${{ inputs.remove_linux_cloud_tools == 'true' }}
+    - if: ${{ inputs.remove_linux_cloud_tools == 'true' }}
       shell: bash
       run: |
         echo "::group::Linux Cloud Tools"
         sudo apt-get remove -y linux-cloud-tools-* || echo "Linux cloud tools are not installed"
         echo "::endgroup::"
 
-    - name: Remove Nginx
-      if: ${{ inputs.remove_nginx == 'true' }}
+    - if: ${{ inputs.remove_nginx == 'true' }}
       shell: bash
       run: |
         echo "::group::Nginx"
         sudo apt-get remove -y nginx || echo "Nginx is not installed"
         echo "::endgroup::"
 
-    - name: Remove Apache
-      if: ${{ inputs.remove_apache == 'true' }}
+    - if: ${{ inputs.remove_apache == 'true' }}
       shell: bash
       run: |
         echo "::group::Apache"
         sudo apt-get remove -y apache2 || echo "apache is not installed"
         echo "::endgroup::"
 
-    - name: Remove Microsoft Package
-      if: ${{ inputs.remove_microsoft == 'true' }}
+    - if: ${{ inputs.remove_microsoft == 'true' }}
       shell: bash
       run: |
         echo "::group::Microsoft"
@@ -262,32 +249,28 @@ runs:
         sudo rm -rf /opt/microsoft
         echo "::endgroup::"
 
-    - name: Remove Php
-      if: ${{ inputs.remove_php == 'true' }}
+    - if: ${{ inputs.remove_php == 'true' }}
       shell: bash
       run: |
         echo "::group::Php"
         sudo apt-get remove -y php || echo "php is not installed"
         echo "::endgroup::"
 
-    - name: Remove Pollinate
-      if: ${{ inputs.remove_pollinate == 'true' }}
+    - if: ${{ inputs.remove_pollinate == 'true' }}
       shell: bash
       run: |
         echo "::group::Pollinate"
         sudo apt-get remove -y pollinate || echo "pollinate is not installed"
         echo "::endgroup::"
 
-    - name: Remove Powershell
-      if: ${{ inputs.remove_powershell == 'true' }}
+    - if: ${{ inputs.remove_powershell == 'true' }}
       shell: bash
       run: | 
         echo "::group::Pollinate"
         sudo apt-get remove -y powershell || echo "powershell is not installed"
         echo "::endgroup::"
 
-    - name: Remove Ruby
-      if: ${{ inputs.remove_ruby == 'true' }}
+    - if: ${{ inputs.remove_ruby == 'true' }}
       shell: bash
       run: |
         echo "::group::Ruby"
@@ -295,24 +278,21 @@ runs:
         rm -rf /opt/hostedtoolcache/Ruby
         echo "::endgroup::"
 
-    - name: Remove Swift
-      if: ${{ inputs.remove_swift == 'true' }}
+    - if: ${{ inputs.remove_swift == 'true' }}
       shell: bash
       run: |
         echo "::group::Swift"
         sudo apt-get remove -y swift || echo "swift is not installed"
         echo "::endgroup::"
 
-    - name: Remove Swig
-      if: ${{ inputs.remove_swig == 'true' }}
+    - if: ${{ inputs.remove_swig == 'true' }}
       shell: bash
       run: |
         echo "::group::Swig"
         sudo apt-get remove -y swig || echo "swig is not installed"
         echo "::endgroup::"
 
-    - name: Remove LaTeX
-      if: ${{ inputs.remove_latex == 'true' }}
+    - if: ${{ inputs.remove_latex == 'true' }}
       shell: bash
       run: |
         echo "::group::Swig"
@@ -320,32 +300,28 @@ runs:
         sudo apt-get remove -y texlive || echo "texlive is not installed"
         echo "::endgroup::"
 
-    - name: Remove Mercurial
-      if: ${{ inputs.remove_mercurial == 'true' }}
+    - if: ${{ inputs.remove_mercurial == 'true' }}
       shell: bash
       run: |
         echo "::group::Mercurial"
         sudo apt-get remove -y mercurial || echo "mercurial is not installed"
         echo "::endgroup::"
 
-    - name: Remove AWS Client
-      if: ${{ inputs.remove_awscli == 'true' }}
+    - if: ${{ inputs.remove_awscli == 'true' }}
       shell: bash
       run: |
         echo "::group::AWS Cli"
         sudo rm -rf /usr/local/aws-cli
         echo "::endgroup::"
 
-    - name: Remove Maven
-      if: ${{ inputs.remove_maven == 'true' }}
+    - if: ${{ inputs.remove_maven == 'true' }}
       shell: bash
       run: |
         echo "::group::Maven"
         sudo apt-get remove -y maven || echo "maven is not installed"
         echo "::endgroup::"
 
-    - name: Remove R
-      if: ${{ inputs.remove_r == 'true' }}
+    - if: ${{ inputs.remove_r == 'true' }}
       shell: bash
       run: |
         echo "::group::R"
@@ -354,16 +330,14 @@ runs:
         sudo rm -rf /usr/share/R
         echo "::endgroup::"
   
-    - name: Remove Editors
-      if: ${{ inputs.remove_vim == 'true' }}
+    - if: ${{ inputs.remove_vim == 'true' }}
       shell: bash
       run: |
         echo "::group::Editors"
         sudo apt-get remove -y r-base-core r-base || echo "R is not installed"
         echo "::endgroup::"
 
-    - name: Remove Archives
-      if: ${{ inputs.remove_archives == 'true' }}
+    - if: ${{ inputs.remove_archives == 'true' }}
       shell: bash
       run: |
         echo "::group::Archives"
@@ -373,56 +347,49 @@ runs:
         sudo rm -rf /usr/share/*.tar.gz
         echo "::endgroup::"
 
-    - name: Remove Android
-      if: ${{ inputs.remove_android == 'true' }}
+    - if: ${{ inputs.remove_android == 'true' }}
       shell: bash
       run: |
         echo "::group::Android"
         sudo rm -rf /usr/local/lib/android
         echo "::endgroup::"
 
-    - name: Remove GHC
-      if: ${{ inputs.remove_ghc == 'true' }}
+    - if: ${{ inputs.remove_ghc == 'true' }}
       shell: bash
       run: |
         echo "::group::GHC"
         sudo rm -rf /opt/ghc
         echo "::endgroup::"
 
-    - name: Remove HHVM
-      if: ${{ inputs.remove_hhvm == 'true' }}
+    - if: ${{ inputs.remove_hhvm == 'true' }}
       shell: bash
       run: |
         echo "::group::HHVM"
         sudo rm -rf /opt/hhvm
         echo "::endgroup::"
 
-    - name: Remove CodeQL
-      if: ${{ inputs.remove_codeql == 'true' }}
+    - if: ${{ inputs.remove_codeql == 'true' }}
       shell: bash
       run: |
         echo "::group::CodeQL"
         sudo rm -rf /opt/hostedtoolcache/CodeQL
         echo "::endgroup::"
 
-    - name: Remove Go
-      if: ${{ inputs.remove_go == 'true' }}
+    - if: ${{ inputs.remove_go == 'true' }}
       shell: bash
       run: |
         echo "::group::Go"
         sudo rm -rf /opt/hostedtoolcache/go
         echo "::endgroup::"
 
-    - name: Remove Node
-      if: ${{ inputs.remove_node == 'true' }}
+    - if: ${{ inputs.remove_node == 'true' }}
       shell: bash
       run: |
         echo "::group::Node"
         sudo rm -rf /opt/hostedtoolcache/node
         echo "::endgroup::"
 
-    - name: Remove Pipx
-      if: ${{ inputs.remove_pipx == 'true' }}
+    - if: ${{ inputs.remove_pipx == 'true' }}
       shell: bash
       run: |
         echo "::group::Pipx"
@@ -432,16 +399,14 @@ runs:
         sudo rm -rf /opt/pipx_bin
         echo "::endgroup::"
 
-    - name: Remove PyPi
-      if: ${{ inputs.remove_pypi == 'true' }}
+    - if: ${{ inputs.remove_pypi == 'true' }}
       shell: bash
       run: |
         echo "::group::Pypi"
         sudo rm -rf /opt/hostedtoolcache/PyPi
         echo "::endgroup::"
 
-    - name: Remove snap
-      if: ${{ inputs.remove_snap == 'true' }}
+    - if: ${{ inputs.remove_snap == 'true' }}
       shell: bash
       run: |
         echo "::group::snap"
@@ -451,31 +416,31 @@ runs:
         sudo apt-mark hold snapd
         echo "::endgroup::"
 
-    - name: List APT Packages Installed
-      shell: bash
+    - shell: bash
       run: |
         echo "::group::List APT"
         comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
         echo "::endgroup::"
 
-    - name: Run AutoRemove
-      shell: bash
+    - shell: bash
       run: |
         echo "::group::Autoremove"
         sudo apt-get autoremove
         echo "::endgroup::"
 
-    - name: List What's Left
-      shell: bash
+    - shell: bash
       run: |
         echo "::group::What's Left"
         tree --du -L 2 /
         echo "::endgroup::"
 
+    - shell: bash
+      run: echo "::endgroup::"
+
+
     - name: Post-Size
       id: post
       shell: bash
       run: |
-         df -h    
          postsize=$(df -h)
          echo "::set-output name=post-size::${postsize}"
