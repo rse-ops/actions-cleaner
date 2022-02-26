@@ -47,6 +47,7 @@ jobs:
           sudo apt-get remove -y ruby-full
           sudo apt-get remove -y swig
           sudo apt-get remove -y texinfo
+          sudo apt-get remove -y mercurial
           sudo rm -rf /usr/local/aws-cli
 
           sudo apt-get remove -y podman swift texlive maven r-base-core r-base apache2 azure-cli ant vim
@@ -73,6 +74,9 @@ jobs:
           sudo rm -rf /usr/share/R
           printf "sudo rm -rf /opt/microsoft\n"
           sudo rm -rf /opt/microsoft
+          sudo rm -rf /opt/hhvm
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+
           comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
 
       - name: List What's Left
