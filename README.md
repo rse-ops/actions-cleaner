@@ -18,7 +18,29 @@ jobs:
         uses: rse-ops/actions-cleaner/ubuntu@main
 ```
 
-For detailed usage, see [ubuntu](ubuntu). We have them organized by base runner in case someone
+For detailed usage, see the actions.yml in [ubuntu](ubuntu) - mostly every removal can be customized so you
+can instead keep it! Here is an example:
+
+
+```yaml
+name: Actions Cleaner
+
+on: 
+  pull_request: []
+ 
+jobs:
+  update:
+    name: Clean All The Things!
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Actions Cleaner
+        uses: rse-ops/actions-cleaner/ubuntu@main
+        with:
+          remove_node: false
+          remove_ruby: false
+```
+
+We have them organized by base runner in case someone
 else wants to add others! If you need space in addition to this, you can try out
 [easimon/maximize-build-space](https://github.com/easimon/maximize-build-space#how-it-works) which
 tries to consolidate filesystems.
