@@ -4,6 +4,18 @@ This is an action to try to make as much space on the GitHub runner as we can!
 Yes, we are building LLVM. 😂️
 
 ```yaml
+name: Actions Cleaner
+
+on: 
+  pull_request: []
+ 
+jobs:
+  update:
+    name: Clean All The Things!
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Actions Cleaner
+        uses: rse-ops/actions-cleaner/ubuntu@main
 ```
 
 For detailed usage, see [ubuntu](ubuntu). We have them organized by base runner in case someone
