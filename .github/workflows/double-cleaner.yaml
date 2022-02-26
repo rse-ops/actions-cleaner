@@ -1,4 +1,4 @@
-name: Actions Cleaner
+name: Double Cleaner
 
 on: 
   workflow_dispatch
@@ -16,9 +16,9 @@ jobs:
           - ubuntu-20.04
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Clean All The Things
         uses: ./ubuntu
