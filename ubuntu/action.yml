@@ -128,9 +128,6 @@ runs:
          presize=$(df -h)
          echo "::set-output name=pre-size::${presize}"
 
-    - shell: bash
-      run: echo "::group::Cleanup"
-
     - if: ${{ inputs.purge_docker == 'true' }}
       shell: bash
       run: |
@@ -433,10 +430,6 @@ runs:
         echo "::group::What's Left"
         tree --du -L 2 /
         echo "::endgroup::"
-
-    - shell: bash
-      run: echo "::endgroup::"
-
 
     - name: Post-Size
       id: post
