@@ -81,6 +81,8 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache/node
           sudo rm -rf /opt/hostedtoolcache/pipx
           sudo rm -rf /opt/hostedtoolcache/pipx_bin
+          sudo rm -rf /opt/hostedtoolcache/Java_Adopt_jdk
+          sudo rm -rf /opt/hostedtoolcache/PyPi
           sudo rm -rf /var/cache/snapd/
           sudo apt autoremove --purge snapd gnome-software-plugin-snap
           sudo rm -rf ~/snap
