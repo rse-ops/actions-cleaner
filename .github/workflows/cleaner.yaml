@@ -76,7 +76,15 @@ jobs:
           sudo rm -rf /opt/microsoft
           sudo rm -rf /opt/hhvm
           sudo rm -rf /opt/hostedtoolcache/CodeQL
-
+          sudo rm -rf /opt/hostedtoolcache/Ruby
+          sudo rm -rf /opt/hostedtoolcache/go
+          sudo rm -rf /opt/hostedtoolcache/node
+          sudo rm -rf /opt/hostedtoolcache/pipx
+          sudo rm -rf /opt/hostedtoolcache/pipx_bin
+          sudo rm -rf /var/cache/snapd/
+          sudo apt autoremove --purge snapd gnome-software-plugin-snap
+          sudo rm -rf ~/snap
+          sudo apt-mark hold snapd
           comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
 
       - name: List What's Left
