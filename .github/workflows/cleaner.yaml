@@ -91,9 +91,9 @@ jobs:
 
       - name: List What's Left
         run: |
-          tree --du -h /opt
-          tree --du -h /
-          tree --du -h /opt/hostedtoolcache
+          tree --du -L 2 /opt
+          tree --du -L 2 /
+          tree --du -L 2 /opt/hostedtoolcache
 
       - name: Post-Size
         run: df -h
