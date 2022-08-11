@@ -128,6 +128,13 @@ runs:
          presize=$(df -h)
          echo "::set-output name=pre-size::${presize}"
 
+    - name: Determine sudo
+      id: sudo
+      shell: bash
+      run: |
+         sudo -v && export SUDO=sudo || export SUDO=""
+         echo "SUDO=${SUDO}" >> $GITHUB_ENV
+         
     - if: ${{ inputs.purge_docker == 'true' }}
       shell: bash
       run: |
@@ -140,138 +147,138 @@ runs:
       shell: bash
       run: |
         echo "::group::Browsers"
-        sudo apt-get remove -y firefox || echo "Firefox is not installed"
-        sudo apt-get remove -y google-chrome-stable  || echo "Google Chrome is Not Installed"
+        ${{ env.SUDO }} apt-get remove -y firefox || echo "Firefox is not installed"
+        ${{ env.SUDO }} apt-get remove -y google-chrome-stable  || echo "Google Chrome is Not Installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_java == 'true' }}
       shell: bash
       run: |
         echo "::group::Java"
-        sudo apt purge openjdk-* || echo "OpenJDK is not installed"
-        sudo apt remove --autoremove openjdk-*  || echo "OpenJDK is not installed"
-        sudo apt purge oracle-java* || echo "Oracle Java is not installed"
-        sudo apt remove --autoremove adoptopenjdk-* || echo "Adopt open JDK is not installed"
-        sudo apt-get remove -y ant || echo "ant is not installed"
-        sudo rm -rf /opt/hostedtoolcache/Java_Adopt_jdk
+        ${{ env.SUDO }} apt purge openjdk-* || echo "OpenJDK is not installed"
+        ${{ env.SUDO }} apt remove --autoremove openjdk-*  || echo "OpenJDK is not installed"
+        ${{ env.SUDO }} apt purge oracle-java* || echo "Oracle Java is not installed"
+        ${{ env.SUDO }} apt remove --autoremove adoptopenjdk-* || echo "Adopt open JDK is not installed"
+        ${{ env.SUDO }} apt-get remove -y ant || echo "ant is not installed"
+        ${{ env.SUDO }} rm -rf /opt/hostedtoolcache/Java_Adopt_jdk
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_podman == 'true' }}
       shell: bash
       run: |
         echo "::group::Podman"
-        sudo apt-get remove -y podman || echo "Podman is not installed"
+        ${{ env.SUDO }} apt-get remove -y podman || echo "Podman is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_buildah == 'true' }}
       shell: bash
       run: |
         echo "::group::Buildah"
-        sudo apt-get remove -y buildah || echo "Buidah is not installed"
+        ${{ env.SUDO }} apt-get remove -y buildah || echo "Buidah is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_dotnet == 'true' }}
       shell: bash
       run: |
         echo "::group::DotNet"
-        sudo apt-get remove -y dotnet-sdk* || echo "Dotnet SDK is is not installed"
-        sudo rm -rf /usr/share/dotnet
+        ${{ env.SUDO }} apt-get remove -y dotnet-sdk* || echo "Dotnet SDK is is not installed"
+        ${{ env.SUDO }} rm -rf /usr/share/dotnet
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_erlang == 'true' }}
       shell: bash
       run: |
         echo "::group::Erlang"
-        sudo apt-get remove -y esl-erlang || echo "erlang is not installed"
+        ${{ env.SUDO }} apt-get remove -y esl-erlang || echo "erlang is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_google_cloud_sdk == 'true' }}
       shell: bash
       run: |
         echo "::group::Google Cloud SDK"
-        sudo apt-get remove -y google-cloud-sdk || echo "Google Cloud SDK is not installed"
-        sudo rm -rf /opt/google
+        ${{ env.SUDO }} apt-get remove -y google-cloud-sdk || echo "Google Cloud SDK is not installed"
+        ${{ env.SUDO }} rm -rf /opt/google
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_mysql == 'true' }}
       shell: bash
       run: |
         echo "::group::MySql"
-        sudo apt-get remove -y mssql* mysql*  || echo "mysql is not installed"
+        ${{ env.SUDO }} apt-get remove -y mssql* mysql*  || echo "mysql is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_postgres == 'true' }}
       shell: bash
       run: |
         echo "::group::Postgres"
-        sudo apt-get remove -y  postgresql* || echo "postgres* is not installed"
+        ${{ env.SUDO }} apt-get remove -y  postgresql* || echo "postgres* is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_azure == 'true' }}
       shell: bash
       run: |
         echo "::group::Azure"
-        sudo apt-get remove -y linux-azure*  || echo "linux-azure* is not installed"
-        sudo apt-get remove -y azure-cli || echo "Azure CLI is not installed"
-        sudo rm -rf /opt/az
-        sudo rm -rf /usr/share/az*
+        ${{ env.SUDO }} apt-get remove -y linux-azure*  || echo "linux-azure* is not installed"
+        ${{ env.SUDO }} apt-get remove -y azure-cli || echo "Azure CLI is not installed"
+        ${{ env.SUDO }} rm -rf /opt/az
+        ${{ env.SUDO }} rm -rf /usr/share/az*
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_linux_cloud_tools == 'true' }}
       shell: bash
       run: |
         echo "::group::Linux Cloud Tools"
-        sudo apt-get remove -y linux-cloud-tools-* || echo "Linux cloud tools are not installed"
+        ${{ env.SUDO }} apt-get remove -y linux-cloud-tools-* || echo "Linux cloud tools are not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_nginx == 'true' }}
       shell: bash
       run: |
         echo "::group::Nginx"
-        sudo apt-get remove -y nginx || echo "Nginx is not installed"
+        ${{ env.SUDO }} apt-get remove -y nginx || echo "Nginx is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_apache == 'true' }}
       shell: bash
       run: |
         echo "::group::Apache"
-        sudo apt-get remove -y apache2 || echo "apache is not installed"
+        ${{ env.SUDO }} apt-get remove -y apache2 || echo "apache is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_microsoft == 'true' }}
       shell: bash
       run: |
         echo "::group::Microsoft"
-        sudo apt-get remove -y packages-microsoft-prod || echo "packages-microsoft-prod is not installed"
-        sudo rm -rf /opt/microsoft
+        ${{ env.SUDO }} apt-get remove -y packages-microsoft-prod || echo "packages-microsoft-prod is not installed"
+        ${{ env.SUDO }} rm -rf /opt/microsoft
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_php == 'true' }}
       shell: bash
       run: |
         echo "::group::Php"
-        sudo apt-get remove -y php || echo "php is not installed"
+        ${{ env.SUDO }} apt-get remove -y php || echo "php is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_pollinate == 'true' }}
       shell: bash
       run: |
         echo "::group::Pollinate"
-        sudo apt-get remove -y pollinate || echo "pollinate is not installed"
+        ${{ env.SUDO }} apt-get remove -y pollinate || echo "pollinate is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_powershell == 'true' }}
       shell: bash
       run: | 
         echo "::group::Pollinate"
-        sudo apt-get remove -y powershell || echo "powershell is not installed"
+        ${{ env.SUDO }} apt-get remove -y powershell || echo "powershell is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_ruby == 'true' }}
       shell: bash
       run: |
         echo "::group::Ruby"
-        sudo apt-get remove -y ruby-full || echo "ruby is not installed"
+        ${{ env.SUDO }} apt-get remove -y ruby-full || echo "ruby is not installed"
         rm -rf /opt/hostedtoolcache/Ruby
         echo "::endgroup::"
 
@@ -279,138 +286,138 @@ runs:
       shell: bash
       run: |
         echo "::group::Swift"
-        sudo apt-get remove -y swift || echo "swift is not installed"
+        ${{ env.SUDO }} apt-get remove -y swift || echo "swift is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_swig == 'true' }}
       shell: bash
       run: |
         echo "::group::Swig"
-        sudo apt-get remove -y swig || echo "swig is not installed"
+        ${{ env.SUDO }} apt-get remove -y swig || echo "swig is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_latex == 'true' }}
       shell: bash
       run: |
         echo "::group::Swig"
-        sudo apt-get remove -y texinfo || echo "texinfo is not installed"
-        sudo apt-get remove -y texlive || echo "texlive is not installed"
+        ${{ env.SUDO }} apt-get remove -y texinfo || echo "texinfo is not installed"
+        ${{ env.SUDO }} apt-get remove -y texlive || echo "texlive is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_mercurial == 'true' }}
       shell: bash
       run: |
         echo "::group::Mercurial"
-        sudo apt-get remove -y mercurial || echo "mercurial is not installed"
+        ${{ env.SUDO }} apt-get remove -y mercurial || echo "mercurial is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_awscli == 'true' }}
       shell: bash
       run: |
         echo "::group::AWS Cli"
-        sudo rm -rf /usr/local/aws-cli
+        ${{ env.SUDO }} rm -rf /usr/local/aws-cli
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_maven == 'true' }}
       shell: bash
       run: |
         echo "::group::Maven"
-        sudo apt-get remove -y maven || echo "maven is not installed"
+        ${{ env.SUDO }} apt-get remove -y maven || echo "maven is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_r == 'true' }}
       shell: bash
       run: |
         echo "::group::R"
-        sudo apt-get remove -y r-base-core r-base || echo "R is not installed"
-        sudo rm -rf /opt/R
-        sudo rm -rf /usr/share/R
+        ${{ env.SUDO }} apt-get remove -y r-base-core r-base || echo "R is not installed"
+        ${{ env.SUDO }} rm -rf /opt/R
+        ${{ env.SUDO }} rm -rf /usr/share/R
         echo "::endgroup::"
   
     - if: ${{ inputs.remove_vim == 'true' }}
       shell: bash
       run: |
         echo "::group::Editors"
-        sudo apt-get remove -y r-base-core r-base || echo "R is not installed"
+        ${{ env.SUDO }} apt-get remove -y r-base-core r-base || echo "R is not installed"
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_archives == 'true' }}
       shell: bash
       run: |
         echo "::group::Archives"
-        sudo rm -rf /opt/*.zip
-        sudo rm -rf /opt/*.tar.gz
-        sudo rm -rf /usr/share/*.zip
-        sudo rm -rf /usr/share/*.tar.gz
+        ${{ env.SUDO }} rm -rf /opt/*.zip
+        ${{ env.SUDO }} rm -rf /opt/*.tar.gz
+        ${{ env.SUDO }} rm -rf /usr/share/*.zip
+        ${{ env.SUDO }} rm -rf /usr/share/*.tar.gz
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_android == 'true' }}
       shell: bash
       run: |
         echo "::group::Android"
-        sudo rm -rf /usr/local/lib/android
+        ${{ env.SUDO }} rm -rf /usr/local/lib/android
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_ghc == 'true' }}
       shell: bash
       run: |
         echo "::group::GHC"
-        sudo rm -rf /opt/ghc
+        ${{ env.SUDO }} rm -rf /opt/ghc
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_hhvm == 'true' }}
       shell: bash
       run: |
         echo "::group::HHVM"
-        sudo rm -rf /opt/hhvm
+        ${{ env.SUDO }} rm -rf /opt/hhvm
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_codeql == 'true' }}
       shell: bash
       run: |
         echo "::group::CodeQL"
-        sudo rm -rf /opt/hostedtoolcache/CodeQL
+        ${{ env.SUDO }} rm -rf /opt/hostedtoolcache/CodeQL
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_go == 'true' }}
       shell: bash
       run: |
         echo "::group::Go"
-        sudo rm -rf /opt/hostedtoolcache/go
+        ${{ env.SUDO }} rm -rf /opt/hostedtoolcache/go
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_node == 'true' }}
       shell: bash
       run: |
         echo "::group::Node"
-        sudo rm -rf /opt/hostedtoolcache/node
+        ${{ env.SUDO }} rm -rf /opt/hostedtoolcache/node
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_pipx == 'true' }}
       shell: bash
       run: |
         echo "::group::Pipx"
-        sudo rm -rf /opt/hostedtoolcache/pipx
-        sudo rm -rf /opt/hostedtoolcache/pipx_bin
-        sudo rm -rf /opt/pipx
-        sudo rm -rf /opt/pipx_bin
+        ${{ env.SUDO }} rm -rf /opt/hostedtoolcache/pipx
+        ${{ env.SUDO }} rm -rf /opt/hostedtoolcache/pipx_bin
+        ${{ env.SUDO }} rm -rf /opt/pipx
+        ${{ env.SUDO }} rm -rf /opt/pipx_bin
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_pypi == 'true' }}
       shell: bash
       run: |
         echo "::group::Pypi"
-        sudo rm -rf /opt/hostedtoolcache/PyPi
+        ${{ env.SUDO }} rm -rf /opt/hostedtoolcache/PyPi
         echo "::endgroup::"
 
     - if: ${{ inputs.remove_snap == 'true' }}
       shell: bash
       run: |
         echo "::group::snap"
-        sudo rm -rf /var/cache/snapd/
-        sudo apt autoremove --purge snapd gnome-software-plugin-snap
-        sudo rm -rf ~/snap
-        sudo apt-mark hold snapd
+        ${{ env.SUDO }} rm -rf /var/cache/snapd/  || echo "Snap is not installed"
+        ${{ env.SUDO }} apt autoremove --purge snapd gnome-software-plugin-snap || echo "Snap is not installed"
+        ${{ env.SUDO }} rm -rf ~/snap  || echo "Snap is not installed"
+        ${{ env.SUDO }} apt-mark hold snapd  || echo "Snap is not installed"
         echo "::endgroup::"
 
     - shell: bash
@@ -422,13 +429,13 @@ runs:
     - shell: bash
       run: |
         echo "::group::Autoremove"
-        sudo apt-get autoremove
+        ${{ env.SUDO }} apt-get autoremove
         echo "::endgroup::"
 
     - shell: bash
       run: |
         echo "::group::What's Left"
-        tree --du -L 2 /
+        tree --du -L 2 / || ls /*/*/
         echo "::endgroup::"
 
     - name: Post-Size
