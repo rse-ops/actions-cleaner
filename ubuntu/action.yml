@@ -435,7 +435,7 @@ runs:
     - shell: bash
       run: |
         echo "::group::What's Left"
-        tree --du -L 2 /
+        tree --du -L 2 / || ls /*/*/
         echo "::endgroup::"
 
     - name: Post-Size
