@@ -46,6 +46,11 @@ else wants to add others!
 
 ## Frequently Asked Questions
 
+> Can I run this on a container?
+
+Yes, and you'll need to set `docker_purge` to false since Docker does not exist inside Docker!
+The remaining commands should support using sudo/or not.
+
 > Why does it take 10 minutes?
 
 There is a tradeoff between uninstalling stuff and time. If you uninstall nothing, your builds will start right away, but you get no extra free space.

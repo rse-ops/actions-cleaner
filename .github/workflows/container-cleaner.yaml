@@ -1,0 +1,26 @@
+name: Container Cleaner
+on:
+  pull_request: []
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+    strategy:
+      fail-fast: false
+      matrix:
+        container: ['ubuntu:18.04', 'ubuntu:20.04', 'ubuntu:22.04']
+    container:
+      image: ${{ matrix.container }}
+      options: "--platform=linux/amd64"
+
+    name: Cleaner on ${{ matrix.container }}
+    steps:
+      - name: Show Job Config     
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Clean All The Things
+        uses: ./ubuntu
+        with:
+          purge_docker: false
