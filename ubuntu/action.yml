@@ -414,10 +414,10 @@ runs:
       shell: bash
       run: |
         echo "::group::snap"
-        ${{ env.SUDO }} rm -rf /var/cache/snapd/
-        ${{ env.SUDO }} apt autoremove --purge snapd gnome-software-plugin-snap
-        ${{ env.SUDO }} rm -rf ~/snap
-        ${{ env.SUDO }} apt-mark hold snapd
+        ${{ env.SUDO }} rm -rf /var/cache/snapd/  || echo "Snap is not installed"
+        ${{ env.SUDO }} apt autoremove --purge snapd gnome-software-plugin-snap || echo "Snap is not installed"
+        ${{ env.SUDO }} rm -rf ~/snap  || echo "Snap is not installed"
+        ${{ env.SUDO }} apt-mark hold snapd  || echo "Snap is not installed"
         echo "::endgroup::"
 
     - shell: bash
